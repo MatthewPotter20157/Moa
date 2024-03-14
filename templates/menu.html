@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
-{% block pageheading %}welcome{% endblock %}
-
 {% block main %}
-<strong><em>Hello World</em></strong>
+    {% for words in words %}
+        <p><strong>Maori name: </strong>{{ word[0] }}</p>
+        <p><strong>Maori name: </strong>{{ word[1] }}</p>
+        <p><strong>Category of word: </strong>{{ word[2] }}</p>
+        <p><strong>Definition: </strong>{{ word[3] }}</p>
+        <p><strong>Year level: </strong>{{ word[4] }}</p>
+    {% endfor %}
 {% endblock %}
