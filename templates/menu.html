@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block main %}
-    {% for words in words %}
+    {% for word in words %}
         <p><strong>Maori name: </strong>{{ word[0] }}</p>
-        <p><strong>Maori name: </strong>{{ word[1] }}</p>
+        <p><strong>English name: </strong>{{ word[1] }}</p>
         <p><strong>Category of word: </strong>{{ word[2] }}</p>
         <p><strong>Definition: </strong>{{ word[3] }}</p>
         <p><strong>Year level: </strong>{{ word[4] }}</p>
