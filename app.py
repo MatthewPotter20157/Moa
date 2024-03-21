@@ -20,6 +20,20 @@ def open_database(database):
     return sqlite3.connect(database)
 
 
+def data_cleanse():
+    con = open_database(DATABASE)
+    # read the data from the database *
+    query = 'SELECT * FROM Words'
+    cur = con.cursor()
+    cur.execute(query)
+    # need a list of correct categories to compare the category to
+    correct_cats = ['Actions', 'Animals', 'Clothing', 'Culture / Religion', 'Descriptive', 'Emotions', 'Food',
+                    'Math / Number', 'Outdoors', 'People', 'School', 'Technology', 'Time']
+
+    # acceptable level range to compare
+    # capitalise first letter
+
+
 @app.route('/')
 def render_homepage():
     return render_template('home.html')
