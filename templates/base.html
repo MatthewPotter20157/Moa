@@ -16,7 +16,14 @@
         <div class="navbar-links">
             <a href="/">Home</a>
             <a href="/menu">All Words</a>
-            <a href="/login">Login</a>
+            <li>
+                <!-- Login/Logout link -->
+                {%if logged_in%}
+                <a href="/logout">Logout</a>
+                {% else %}
+                <a href="/login">Login</a>
+                {% endif %}
+            </li>
         </div>
     </div>
 </nav>

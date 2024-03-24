@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 from sqlite3 import Error
+from flask_bcrypt import bcrypt
 
 app = Flask(__name__)
 
@@ -18,6 +19,15 @@ def create_connection(db_file):
 
 def open_database(database):
     return sqlite3.connect(database)
+
+
+def is_logged_in():
+    if session.get("email") is None:
+        print("not logged in")
+        return False
+    else:
+        print("logged in")
+        return True
 
 
 def data_cleanse():
@@ -51,9 +61,43 @@ def menu():
     return render_template('menu.html', words=word_list)
 
 
-@app.route('/login', methods=['POST', 'GET'])
-def render_login_page():
+@app.route('/login')
+def login():
+    if is_logged_in():
+        return redirect("/")
+    if request.method == 'POST':
+        email = request.form['email'].strip().lower()
+        password = request.form['password'].strip()
+        print(email)
+        query = "SELECT * FROM Users"
+        con = open_database(DATABASE)
+        cur = con.cursor()
+        cur.execute(query, (email,))
+        user_data = cur.fetchone()
+        con.close()
+        print (user_data)
+        try:
+            user_id = user_data[0]
+            name = user_data[1]
+            db_password = user_data[4]
+        except IndexError:
+            return redirect("/login?error-Email+invalid+or+password+incorrect")
+        if not bcrypt.check_password_hash(db_password, password):
+            return redirect(request.referrer + "?error=Email+invalid+or+password+incorrect")
+        session['email'] = email
+        session['user_id'] = user_id
+        session['name'] = name
+        print(session)
+        return redirect('/')
     return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    print(list(session.keys()))
+    [session.pop(key) for key in list(session.keys())]
+    print(list(session.keys()))
+    return redirect('/?message=See+you+next+time!')
 
 
 @app.route('/signup', methods=['POST', 'GET'])
