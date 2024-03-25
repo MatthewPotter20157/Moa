@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
 from sqlite3 import Error
-from flask_bcrypt import bcrypt
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
-
+bcrypt = Bcrypt(app)
+app.secret_key = "f89say987fy87ats87"
 DATABASE = "C:/Users/20157/OneDrive - Wellington College/13 DT/Project/identifier.sqlite"
 
 
@@ -61,21 +62,21 @@ def menu():
     return render_template('menu.html', words=word_list)
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     if is_logged_in():
         return redirect("/")
     if request.method == 'POST':
-        email = request.form['email'].strip().lower()
+        email_user = request.form['email'].strip().lower()
         password = request.form['password'].strip()
-        print(email)
-        query = "SELECT * FROM Users"
+        print(email_user)
+        query = "SElECT * FROM Users WHERE email = ?"
         con = open_database(DATABASE)
         cur = con.cursor()
-        cur.execute(query, (email,))
+        cur.execute(query, (email_user, ))
         user_data = cur.fetchone()
         con.close()
-        print (user_data)
+        print(user_data)
         try:
             user_id = user_data[0]
             name = user_data[1]
@@ -84,9 +85,9 @@ def login():
             return redirect("/login?error-Email+invalid+or+password+incorrect")
         if not bcrypt.check_password_hash(db_password, password):
             return redirect(request.referrer + "?error=Email+invalid+or+password+incorrect")
-        session['email'] = email
-        session['user_id'] = user_id
-        session['name'] = name
+        session['email'] = email_user
+        session['Id'] = user_id
+        session['fname'] = name
         print(session)
         return redirect('/')
     return render_template('login.html')
