@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block pageheading %}admin{% endblock %}
+
+{% block main %}
+    <form class="myform" method="post">
+        <div class="form-group">
+            <div class="form-label"><label for="maori">Maori:</label></div>
+            <div class="form-element"><input type="text" name="maori" id="maori" required></div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-label"><label for="english">English:</label></div>
+            <div class="form-element"><input type="text" name="english" id="english" required></div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-label"><label for="category">Category:</label></div>
+            <div class="form-element"><input type="text" name="category" id="category" required></div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-label"><label for="definition">Definition:</label></div>
+            <div class="form-element"><input type="text" name="definition" id="definition" required></div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-label"><label for="level">Level:</label></div>
+            <div class="form-element"><input type="int" name="level" id="level" required></div>
+        </div>
+
+        <div class="form-group">
+            <div></div>
+            <div class="form-element"><input type="reset"></div>
+        </div>
+
+        <div class="form-group">
+            <div></div>
+            <div class="form-element"><input type="submit"></div>
+        </div>
+    </form>
+{% endblock %}

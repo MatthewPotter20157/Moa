@@ -97,7 +97,7 @@ def render_signup_page():
         email_user = request.form.get('email').lower().strip()
         password_user = request.form.get('password')
         password2 = request.form.get('password2')
-        teacher = 'on'
+        teacher = request.form.get('teacher')
 
         if password_user != password2:
             print(f'password1: {password_user}, password2: {password2}')
@@ -118,6 +118,27 @@ def render_signup_page():
             return redirect("/signup?error=Email+is+all+ready+in+use")
 
     return render_template('signup.html', logged_in=is_logged_in())
+
+
+@app.route('/admin', methods=['POST', 'GET'])
+def render_admin():
+    if request.method == 'POST':
+        print(request.form)
+        maori = request.form.get('maori').title().strip()
+        english = request.form.get('english').title().strip()
+        category = request.form.get('category').lower().strip()
+        definition = request.form.get('definition')
+        level = request.form.get('level')
+        con = open_database(DATABASE)
+        query = 'INSERT INTO Words (Maori, English, Category, Definition, Level) VALUES (?, ?, ?, ?, ?)'
+        cur = con.cursor()
+        try:
+            cur.execute(query, (maori, english, category, definition, level))
+            con.commit()
+        except sqlite3.IntegrityError:
+            con.close()
+            return redirect("/signup?error=no")
+    return render_template('admin.html', logged_in=is_logged_in())
 
 
 if __name__ == '__main__':
