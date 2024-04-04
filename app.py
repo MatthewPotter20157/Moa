@@ -31,23 +31,10 @@ def is_logged_in():
         return True
 
 
-def data_cleanse():
-    con = open_database(DATABASE)
-    # read the data from the database *
-    query = 'SELECT * FROM Words'
-    cur = con.cursor()
-    cur.execute(query)
-    # need a list of correct categories to compare the category to
-    correct_cats = ['Actions', 'Animals', 'Clothing', 'Culture / Religion', 'Descriptive', 'Emotions', 'Food',
-                    'Math / Number', 'Outdoors', 'People', 'School', 'Technology', 'Time']
-
-    # acceptable level range to compare
-    # capitalise first letter
-
-
 @app.route('/')
 def render_homepage():
-    return render_template('home.html')
+    print(session)
+    return render_template('home.html', logged_in=is_logged_in())
 
 
 @app.route('/menu')
@@ -59,30 +46,30 @@ def menu():
     word_list = cur.fetchall()
     con.close()
     print(word_list)
-    return render_template('menu.html', words=word_list)
+    return render_template('menu.html', words=word_list, logged_in=is_logged_in())
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if is_logged_in():
         return redirect("/")
+    print("Logging in")
     if request.method == 'POST':
         email_user = request.form['email'].strip().lower()
         password = request.form['password'].strip()
         print(email_user)
-        query = "SElECT * FROM Users WHERE email = ?"
+        query = "SElECT Id, fname, password FROM Users WHERE email = ?"
         con = open_database(DATABASE)
         cur = con.cursor()
         cur.execute(query, (email_user, ))
-        user_data = cur.fetchone()
+        user_data = cur.fetchall()
         con.close()
         print(user_data)
-        try:
-            user_id = user_data[0]
-            name = user_data[1]
-            db_password = user_data[4]
-        except IndexError:
-            return redirect("/login?error-Email+invalid+or+password+incorrect")
+        if user_data is None:
+            return redirect("/login?error=Email+invalid+password+incorrect")
+        user_id = user_data[0][0]
+        name = user_data[0][1]
+        db_password = user_data[0][2]
         if not bcrypt.check_password_hash(db_password, password):
             return redirect(request.referrer + "?error=Email+invalid+or+password+incorrect")
         session['email'] = email_user
@@ -90,7 +77,7 @@ def login():
         session['fname'] = name
         print(session)
         return redirect('/')
-    return render_template('login.html')
+    return render_template('login.html', logged_in=is_logged_in())
 
 
 @app.route('/logout')
@@ -119,17 +106,18 @@ def render_signup_page():
         if len(password_user) < 8:
             return redirect("/signup?error=Password+must+be+at+least+8+letters")
 
+        hashed_password = bcrypt.generate_password_hash(password_user)
         con = open_database(DATABASE)
-        query = 'INSERT INTO Users (fname, lname, email, password, teacher) VALUES (?, ?, ?, ?,?)'
+        query = 'INSERT INTO Users (fname, lname, email, password, teacher) VALUES (?, ?, ?, ?, ?)'
         cur = con.cursor()
         try:
-            cur.execute(query, (f_name, l_name, email_user, password_user, teacher))
+            cur.execute(query, (f_name, l_name, email_user, hashed_password, teacher))
             con.commit()
         except sqlite3.IntegrityError:
             con.close()
             return redirect("/signup?error=Email+is+all+ready+in+use")
 
-    return render_template('signup.html')
+    return render_template('signup.html', logged_in=is_logged_in())
 
 
 if __name__ == '__main__':
