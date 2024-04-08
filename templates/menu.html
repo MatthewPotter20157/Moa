@@ -2,9 +2,10 @@
 
 {% block main %}
     {% for word in words %}
-        <button id="open_btn" Maori="{{ word[0] }}", English="{{ word[1] }}", Category="{{ word[2] }}",Definition="{{ word[3] }}", Year="{{ word[4] }}">{{ word[0] }}, '{{ word[1] }}</button>
+        <button class="words" Maori="{{ word[0] }}", English="{{ word[1] }}", Category="{{ word[2] }}",Definition="{{ word[3] }}", Year="{{ word[4] }}">{{ word[0] }} {{ word[1] }}</button>
     {% endfor %}
 
+    <!-- this code is not mine copied of Harshal because I thought it would be a cool implement for my website-->
     <dialog id="dialog">
         <div id="message"></div>
         <button id="close_btn">Close</button>
@@ -12,19 +13,28 @@
     </dialog>
 
     <script>
-        document.querySelectorAll("dialog");
-        {
-            const modal = document.getElementById("message")
-            const button = document.getElementById("open_btn")
-            const close = document.getElementById("close_btn")
+        const buttons = document.querySelectorAll(".words");
+        const dialog = document.getElementById("dialog");
+        const container = document.getElementById("message");
+        const closeBtn = document.getElementById("close_btn");
 
-            button.onclick = function() {
-                modal.style.display = "block";
-            }
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const maori = this.getAttribute("data-maori");
+                const english = this.getAttribute("data-english");
+                const category = this.getAttribute("data-category");
+                const definition = this.getAttribute("data-definition");
+                const year = this.getAttribute("data-year");
 
-            close.onclick = function() {
-            modal.style.display = "none";
-            }
-        }
+                const message = `Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}`;
+
+                container.innerHTML = message;
+                dialog.showModal();
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            dialog.close();
+        });
     </script>
 {% endblock %}
