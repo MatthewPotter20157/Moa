@@ -13,27 +13,25 @@
     </dialog>
 
     <script>
-        const buttons = document.querySelectorAll(".words");
-        const dialog = document.getElementById("dialog");
-        const container = document.getElementById("message");
-        const closeBtn = document.getElementById("close_btn");
-
-        buttons.forEach(button => {
+        document.querySelectorAll('.words').forEach(button => {
             button.addEventListener('click', function() {
-                const maori = this.getAttribute("data-maori");
-                const english = this.getAttribute("data-english");
-                const category = this.getAttribute("data-category");
-                const definition = this.getAttribute("data-definition");
-                const year = this.getAttribute("data-year");
+                const maori = this.getAttribute("Maori");
+                const english = this.getAttribute("English");
+                const category = this.getAttribute("Category");
+                const definition = this.getAttribute("Definition");
+                const year = this.getAttribute("Year");
 
                 const message = `Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}`;
 
+                const dialog = document.getElementById('dialog');
+                const container = document.getElementById('message');
                 container.innerHTML = message;
                 dialog.showModal();
             });
         });
 
-        closeBtn.addEventListener('click', function() {
+        document.addEventListener('click', function() {
+            const dialog = document.getElementById('dialog');
             dialog.close();
         });
     </script>
