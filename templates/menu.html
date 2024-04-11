@@ -2,10 +2,10 @@
 
 {% block main %}
     {% for word in words %}
-        <button class="words" Maori="{{ word[0] }}", English="{{ word[1] }}", Category="{{ word[2] }}",Definition="{{ word[3] }}", Year="{{ word[4] }}">{{ word[0] }} {{ word[1] }}</button>
+        <button class="word" data-maori="{{ word[0] }}" data-english="{{ word[1] }}" data-category="{{ word[2] }}" data-definition="{{ word[3] }}" data-year="{{ word[4] }}">{{ word[0] }} <> {{ word[1] }}</button>
     {% endfor %}
 
-    <!-- this code is not mine copied of Harshal because I thought it would be a cool implement for my website-->
+    <!-- Thanks to Harshal for showing me a better way of displaying the data -->
     <dialog id="dialog">
         <div id="message"></div>
         <button id="close_btn">Close</button>
@@ -13,13 +13,13 @@
     </dialog>
 
     <script>
-        document.querySelectorAll('.words').forEach(button => {
+        document.querySelectorAll('.word').forEach(button => {
             button.addEventListener('click', function() {
-                const maori = this.getAttribute("Maori");
-                const english = this.getAttribute("English");
-                const category = this.getAttribute("Category");
-                const definition = this.getAttribute("Definition");
-                const year = this.getAttribute("Year");
+                const maori = this.getAttribute("data-maori");
+                const english = this.getAttribute("data-english");
+                const category = this.getAttribute("data-category");
+                const definition = this.getAttribute("data-definition");
+                const year = this.getAttribute("data-year");
 
                 const message = `Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}`;
 
@@ -30,9 +30,15 @@
             });
         });
 
-        document.addEventListener('click', function() {
+        const closeButton = document.getElementById('close_btn');
+        closeButton.addEventListener('click', function() {
             const dialog = document.getElementById('dialog');
             dialog.close();
+        });
+
+        const deleteButton = document.getElementById('delete');
+        deleteButton.addEventListener('click', function() {
+            // Handle delete action here
         });
     </script>
 {% endblock %}

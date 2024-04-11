@@ -30,11 +30,19 @@ def is_logged_in():
         print("logged in")
         return True
 
+def is_teacher():
+    if session.get("teacher") is None:
+        print("not teacher")
+        return False
+    else:
+        print("teacher")
+        return True
+
 
 @app.route('/')
 def render_homepage():
     print(session)
-    return render_template('home.html', logged_in=is_logged_in())
+    return render_template('home.html', logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/menu')
@@ -46,7 +54,7 @@ def menu():
     word_list = cur.fetchall()
     con.close()
     print(word_list)
-    return render_template('menu.html', words=word_list, logged_in=is_logged_in())
+    return render_template('menu.html', words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -58,7 +66,7 @@ def login():
         email_user = request.form['email'].strip().lower()
         password = request.form['password'].strip()
         print(email_user)
-        query = "SElECT Id, fname, password FROM Users WHERE email = ?"
+        query = "SElECT Id, fname, password,teacher FROM Users WHERE email = ?"
         con = open_database(DATABASE)
         cur = con.cursor()
         cur.execute(query, (email_user, ))
@@ -70,14 +78,16 @@ def login():
         user_id = user_data[0][0]
         name = user_data[0][1]
         db_password = user_data[0][2]
+        teacher = user_data[0][3]
         if not bcrypt.check_password_hash(db_password, password):
             return redirect(request.referrer + "?error=Email+invalid+or+password+incorrect")
         session['email'] = email_user
         session['Id'] = user_id
         session['fname'] = name
+        session['teacher'] = teacher
         print(session)
         return redirect('/')
-    return render_template('login.html', logged_in=is_logged_in())
+    return render_template('login.html', logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/logout')
@@ -117,7 +127,7 @@ def render_signup_page():
             con.close()
             return redirect("/signup?error=Email+is+all+ready+in+use")
 
-    return render_template('signup.html', logged_in=is_logged_in())
+    return render_template('signup.html', logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/admin', methods=['POST', 'GET'])
@@ -126,19 +136,20 @@ def render_admin():
         print(request.form)
         maori = request.form.get('maori').title().strip()
         english = request.form.get('english').title().strip()
-        category = request.form.get('category').lower().strip()
-        definition = request.form.get('definition')
+        category = request.form.get('category').title().strip()
+        definition = request.form.get('definition').title()
         level = request.form.get('level')
+        User_Id = session.get('Id')
         con = open_database(DATABASE)
-        query = 'INSERT INTO Words (Maori, English, Category, Definition, Level) VALUES (?, ?, ?, ?, ?)'
+        query = 'INSERT INTO Words (Maori, English, Category, Definition, Level,User_Id) VALUES (?, ?, ?, ?, ?,?)'
         cur = con.cursor()
         try:
-            cur.execute(query, (maori, english, category, definition, level))
+            cur.execute(query, (maori, english, category, definition, level, User_Id))
             con.commit()
         except sqlite3.IntegrityError:
             con.close()
             return redirect("/signup?error=no")
-    return render_template('admin.html', logged_in=is_logged_in())
+    return render_template('admin.html', logged_in=is_logged_in(), teacher=is_teacher())
 
 
 if __name__ == '__main__':

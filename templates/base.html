@@ -21,7 +21,11 @@
                 <p> Logged In </p>
                 <p> {{ log_param }}</p>
                 <a href="/logout">Logout</a>
-                <a href="/admin">Admin</a>
+                {% if teacher == True %}
+                    <a href="/admin">Admin</a>
+                {% else %}
+                    <p> Not a Teacher </p>
+                {% endif %}
             {% else %}
                 <p> Logged Out </p>
                 <p> {{ log_param }}</p>
@@ -32,7 +36,7 @@
 </nav>
 <div class="container">
     <header>
-        <h1>Dictionary</h1>
+        <h1>Maori Dictionary</h1>
         <h2>{% block pageheading %}{% endblock %}</h2>
     </header>
 
