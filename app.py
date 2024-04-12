@@ -137,7 +137,7 @@ def render_admin():
         maori = request.form.get('maori').title().strip()
         english = request.form.get('english').title().strip()
         category = request.form.get('category').title().strip()
-        definition = request.form.get('definition').title()
+        definition = request.form.get('definition').capitalize()
         level = request.form.get('level')
         User_Id = session.get('Id')
         con = open_database(DATABASE)
