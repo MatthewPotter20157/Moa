@@ -48,7 +48,7 @@ def render_homepage():
 @app.route('/menu')
 def menu():
     con = create_connection(DATABASE)
-    query = "SELECT Maori, English, Category, Definition, Level FROM Words"
+    query = "SELECT Maori, English, Category, Definition, Level, fname FROM Words w INNER JOIN Users u ON w.User_ID = u.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
@@ -141,7 +141,7 @@ def render_admin():
         level = request.form.get('level')
         User_Id = session.get('Id')
         con = open_database(DATABASE)
-        query = 'INSERT INTO Words (Maori, English, Category, Definition, Level,User_Id) VALUES (?, ?, ?, ?, ?,?)'
+        query = 'INSERT INTO Words (Maori, English, Category, Definition, Level, User_Id) VALUES (?, ?, ?, ?, ?,?)'
         cur = con.cursor()
         try:
             cur.execute(query, (maori, english, category, definition, level, User_Id))
@@ -150,6 +150,20 @@ def render_admin():
             con.close()
             return redirect("/signup?error=no")
     return render_template('admin.html', logged_in=is_logged_in(), teacher=is_teacher())
+
+
+@app.route('/deletion', methods=['POST'])
+def render_deletion():
+    if not is_logged_in():
+        return redirect('/?message=Not+a+teacher')
+    if request.method == 'POST':
+        word = request.form.get('cat_id')
+        print(word)
+        word = word.splt(', ')
+        cat_id = word[0]
+        cat_name = word[1]
+        return render_template('confirm_deletion.html', id=cat_id, name=cat_name, type='Id', logged_in=is_logged_in())
+    return redirect('/admin')
 
 
 if __name__ == '__main__':

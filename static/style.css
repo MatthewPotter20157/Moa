@@ -46,6 +46,10 @@ nav {
     color: rgb(52, 152, 219); /*light blue*/
 }
 
+nav:hover {
+    text-underline: rgb(52,152,219);
+}
+
 button {
     color: white;
     background-color: black;
@@ -83,6 +87,10 @@ a, a:visited {
     color: rgb(52, 152, 219);
     /*color:hotpink;*/
     text-decoration: none;
+}
+
+a:hover {
+    text-underline: rgb(52,152,219);
 }
 
 .product-box img {
