@@ -48,7 +48,7 @@ def render_homepage():
 @app.route('/menu')
 def menu():
     con = create_connection(DATABASE)
-    query = "SELECT Maori, English, Category, Definition, Level, fname FROM Words w INNER JOIN Users u ON w.User_ID = u.Id"
+    query = "SELECT Maori, English, Category, Definition, Level, email FROM Words w INNER JOIN Users u ON w.User_ID = u.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
@@ -73,14 +73,22 @@ def login():
         user_data = cur.fetchall()
         con.close()
         print(user_data)
+
         if user_data is None:
             return redirect("/login?error=Email+invalid+password+incorrect")
-        user_id = user_data[0][0]
-        name = user_data[0][1]
-        db_password = user_data[0][2]
-        teacher = user_data[0][3]
+
+        try:
+            user_id = user_data[0][0]
+            name = user_data[0][1]
+            db_password = user_data[0][2]
+            teacher = user_data[0][3]
+
+        except IndexError:
+            return redirect("/login?error=Email+invalid+password+incorrect")
+
         if not bcrypt.check_password_hash(db_password, password):
             return redirect(request.referrer + "?error=Email+invalid+or+password+incorrect")
+
         session['email'] = email_user
         session['Id'] = user_id
         session['fname'] = name
