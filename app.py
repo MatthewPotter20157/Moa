@@ -48,7 +48,8 @@ def render_homepage():
 @app.route('/menu')
 def menu():
     con = create_connection(DATABASE)
-    query = "SELECT Maori, English, Category, Definition, Level, email FROM Words w INNER JOIN Users u ON w.User_ID = u.Id"
+    query = "SELECT Maori, English, Category, Definition, Level, fname FROM Words w INNER JOIN Users u ON w.User_ID = u.Id " \
+            "INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
@@ -149,7 +150,7 @@ def render_admin():
         level = request.form.get('level')
         User_Id = session.get('Id')
         con = open_database(DATABASE)
-        query = 'INSERT INTO Words (Maori, English, Category, Definition, Level, User_Id) VALUES (?, ?, ?, ?, ?,?)'
+        query = 'INSERT INTO Words (Maori, English, Cat_id, Definition, Level, User_Id) VALUES (?, ?, ?, ?, ?, ?)'
         cur = con.cursor()
         try:
             cur.execute(query, (maori, english, category, definition, level, User_Id))
