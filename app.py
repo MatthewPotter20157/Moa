@@ -158,7 +158,14 @@ def render_admin():
         except sqlite3.IntegrityError:
             con.close()
             return redirect("/signup?error=no")
-    return render_template('admin.html', logged_in=is_logged_in(), teacher=is_teacher())
+    con = open_database(DATABASE)
+    query = "SELECT * FROM Category"
+    cur = con.cursor()
+    cur.execute(query)
+    category = cur.fetchall()
+    con.close()
+    print(category)
+    return render_template('admin.html', categories=category, logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/deletion', methods=['POST'])
