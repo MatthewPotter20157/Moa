@@ -46,4 +46,22 @@
             <div class="form-element"><input type="reset"></div>
         </div>
     </form>
+
+    <h4>Delete a word</h4>
+        <form class="myform" method="post" action="/delete_word">
+            <div class="form-group">
+                <div class="form-label"><label for="name">Word:</label></div>
+                <div class="form-element">
+                    <select id="cat_id" name="cat_id">
+                        {% for word in words %}
+                            <option value="{{ word[0] }}, {{ word[1] }}">{{ word[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-label"></div>
+                <div class="form-element"><input type="submit" value="Delete word"></div>
+            </div>
+        </form>
 {% endblock %}

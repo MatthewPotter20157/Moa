@@ -165,20 +165,38 @@ def render_admin():
     category = cur.fetchall()
     con.close()
     print(category)
-    return render_template('admin.html', categories=category, logged_in=is_logged_in(), teacher=is_teacher())
+    con = open_database(DATABASE)
+    query1 = "SELECT Id, English FROM Words"
+    cur = con.cursor()
+    cur.execute(query1)
+    word = cur.fetchall()
+    print(word)
+    con.close()
+    return render_template('admin.html', words=word, categories=category, logged_in=is_logged_in(), teacher=is_teacher())
 
 
-@app.route('/deletion', methods=['POST'])
-def render_deletion():
+@app.route('/delete_word', methods=['POST'])
+def render_delete_word():
     if not is_logged_in():
-        return redirect('/?message=Not+a+teacher')
-    if request.method == 'POST':
-        word = request.form.get('cat_id')
-        print(word)
-        word = word.splt(', ')
-        cat_id = word[0]
-        cat_name = word[1]
-        return render_template('confirm_deletion.html', id=cat_id, name=cat_name, type='Id', logged_in=is_logged_in())
+        return redirect('/?message=Need+to+be+logged+in.')
+    if request.method == "POST":
+        word = request.form.get('word')
+        word = word.split(", ")
+        id1 = word[0]
+        name_s = word[1]
+        return render_template("delete_confirm1.html", id=id1, name=name_s, type="word", logged_in=is_logged_in(), is_teacher=is_teacher())
+    return redirect('/admin')
+
+@app.route('/delete_word_confirm/<id>')
+def delete_word_confirm(id):
+    if not is_logged_in():
+        return redirect('/?message=Need+tobe+logged+in.')
+    con = create_connection(DATABASE)
+    query = 'DELETE FROM maori_words WHERE id = ?'
+    cur = con.cursor()
+    cur.execute(query, (id,))
+    con.commit()
+    con.close()
     return redirect('/admin')
 
 

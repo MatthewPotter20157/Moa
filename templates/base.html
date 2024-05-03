@@ -14,22 +14,22 @@
 <nav>
     <div class="container">
         <div class="navbar-links">
-            <a href="/">Home</a>
-            <a href="/menu">All Words</a>
+            <a href="/">Home / Haukāinga</a>
+            <a href="/menu">All Words / Kupu Katoa</a>
             <!-- Login/Logout link -->
             {% if logged_in == True %}
-                <p> Logged In </p>
+                <p> Logged In / Kua Takiuru</p>
                 <p> {{ log_param }}</p>
-                <a href="/logout">Logout</a>
+                <a href="/logout">Logout / Putaputa</a>
                 {% if teacher == True %}
-                    <a href="/admin">Admin</a>
+                    <a href="/admin">Admin / Kaiwhakahaere</a>
                 {% else %}
-                    <p> Student account </p>
+                    <p> Student account / Tauira</p>
                 {% endif %}
             {% else %}
-                <p> Logged Out </p>
+                <p> Logged Out / Takiputa </p>
                 <p> {{ log_param }}</p>
-                <a href="/login">Login</a>
+                <a href="/login">Login / Takiuru </a>
             {% endif %}
         </div>
     </div>
