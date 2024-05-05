@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e92977af-b3c1-4cad-9931-8b1cd891320d" name="Changes" comment="FInishing delete" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Flask Main" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2dc6h6im9JfpMeANgb9wjdd7mdM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/20157/OneDrive - Wellington College/13 DT/Project&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\20157\OneDrive - Wellington College\13 DT\Project\static" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flask server.Project">
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <module name="Project" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Project" type="Python.FlaskServer">
+      <module name="Project" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flask server.Flask (app.py)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e92977af-b3c1-4cad-9931-8b1cd891320d" name="Changes" comment="" />
+      <created>1710295135738</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710295135738</updated>
+      <workItem from="1710295137323" duration="979000" />
+      <workItem from="1710376318625" duration="2272000" />
+      <workItem from="1710378600144" duration="300000" />
+      <workItem from="1710715203750" duration="1434000" />
+      <workItem from="1710717943497" duration="321000" />
+      <workItem from="1710796280818" duration="3435000" />
+      <workItem from="1710897939234" duration="2957000" />
+      <workItem from="1710981082479" duration="2907000" />
+      <workItem from="1711319517217" duration="990000" />
+      <workItem from="1711320534634" duration="115000" />
+      <workItem from="1711320662723" duration="1299000" />
+      <workItem from="1711321985208" duration="279000" />
+      <workItem from="1711322279286" duration="774000" />
+      <workItem from="1711401336663" duration="3294000" />
+      <workItem from="1711502675752" duration="3053000" />
+      <workItem from="1712107490442" duration="3030000" />
+      <workItem from="1712190433979" duration="3194000" />
+      <workItem from="1712532801565" duration="3284000" />
+      <workItem from="1712614431048" duration="3212000" />
+      <workItem from="1712716042707" duration="1918000" />
+      <workItem from="1712798546483" duration="3461000" />
+      <workItem from="1712883252357" duration="1522000" />
+      <workItem from="1714347490681" duration="2616000" />
+      <workItem from="1714428886313" duration="3374000" />
+      <workItem from="1714524736950" duration="1931000" />
+      <workItem from="1714613290238" duration="3161000" />
+    </task>
+    <task id="LOCAL-00001" summary="g">
+      <created>1710295252554</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710295252554</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test">
+      <created>1710295801673</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710295801673</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test">
+      <created>1710377029789</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710377029789</updated>
+    </task>
+    <task id="LOCAL-00004" summary="test">
+      <created>1710798391155</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710798391155</updated>
+    </task>
+    <task id="LOCAL-00005" summary="test">
+      <created>1710900895519</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710900895519</updated>
+    </task>
+    <task id="LOCAL-00006" summary="test">
+      <created>1710983975869</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710983975869</updated>
+    </task>
+    <task id="LOCAL-00007" summary="test">
+      <created>1711321388934</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1711321388934</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Invalid salt">
+      <created>1711404571304</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711404571304</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Yay The log work and the ima is good">
+      <created>1712191412200</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1712191412200</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Yay The log work and the ima is good">
+      <created>1712191420917</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1712191420917</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Yay The log work and the ima is good">
+      <created>1712193632142</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1712193632142</updated>
+    </task>
+    <task id="LOCAL-00012" summary="wording on modal">
+      <created>1712536520467</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1712536520468</updated>
+    </task>
+    <task id="LOCAL-00013" summary="finalising modal">
+      <created>1712617771904</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1712617771905</updated>
+    </task>
+    <task id="LOCAL-00014" summary="finalising modal">
+      <created>1712718787806</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1712718787806</updated>
+    </task>
+    <task id="LOCAL-00015" summary="(: Finished the modal :)">
+      <created>1712802011151</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1712802011151</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fixing errors with sign up">
+      <created>1712884853951</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1712884853951</updated>
+    </task>
+    <task id="LOCAL-00017" summary="user_id">
+      <created>1714432269008</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1714432269008</updated>
+    </task>
+    <task id="LOCAL-00018" summary="user_id">
+      <created>1714526665422</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1714526665422</updated>
+    </task>
+    <task id="LOCAL-00019" summary="FInishing delete">
+      <created>1714616453203</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1714616453203</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="g" />
+    <MESSAGE value="test" />
+    <MESSAGE value="Invalid salt" />
+    <MESSAGE value="Yay The log work and the ima is good" />
+    <MESSAGE value="wording on modal" />
+    <MESSAGE value="finalising modal" />
+    <MESSAGE value="(: Finished the modal :)" />
+    <MESSAGE value="fixing errors with sign up" />
+    <MESSAGE value="user_id" />
+    <MESSAGE value="FInishing delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="FInishing delete" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Project$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1710981254376" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Project$Project.coverage" NAME="Project Coverage Results" MODIFIED="1714616178679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
