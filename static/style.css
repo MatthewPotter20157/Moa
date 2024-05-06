@@ -2,6 +2,11 @@
     color: black;
 }
 
+* {
+    width: 200px;
+    height: auto;
+}
+
 body {
     background-color: rgb(126, 126, 126);
 }
