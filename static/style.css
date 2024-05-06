@@ -2,9 +2,9 @@
     color: black;
 }
 
-* {
-    width: 200px;
-    height: auto;
+.images {
+    max-width: 178px;
+    max-height: 118px;
 }
 
 body {

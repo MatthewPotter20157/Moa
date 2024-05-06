@@ -149,11 +149,12 @@ def render_admin():
         definition = request.form.get('definition').capitalize()
         level = request.form.get('level')
         User_Id = session.get('Id')
+        image = 'noimage'
         con = open_database(DATABASE)
-        query = 'INSERT INTO Words (Maori, English, Cat_id, Definition, Level, User_Id) VALUES (?, ?, ?, ?, ?, ?)'
+        query = 'INSERT INTO Words (Maori, English, Cat_id, Definition, Level, User_Id, Images) VALUES (?, ?, ?, ?, ?, ?, ?)'
         cur = con.cursor()
         try:
-            cur.execute(query, (maori, english, category, definition, level, User_Id))
+            cur.execute(query, (maori, english, category, definition, level, User_Id, image))
             con.commit()
         except sqlite3.IntegrityError:
             con.close()
@@ -175,7 +176,7 @@ def render_admin():
     return render_template('admin.html', words=word, categories=category, logged_in=is_logged_in(), teacher=is_teacher())
 
 
-@app.route('/delete_word', methods=['POST'])
+@app.route('/confirm_deletion', methods=['POST'])
 def render_delete_word():
     if not is_logged_in():
         return redirect('/?message=Need+to+be+logged+in.')
@@ -184,7 +185,7 @@ def render_delete_word():
         word = word.split(", ")
         id1 = word[0]
         name_s = word[1]
-        return render_template("delete_confirm1.html", id=id1, name=name_s, type="word", logged_in=is_logged_in(), is_teacher=is_teacher())
+        return render_template("delete_confirm1.html", id=id1, name=name_s, type="word", logged_in=is_logged_in(), teacher=is_teacher())
     return redirect('/admin')
 
 @app.route('/delete_word_confirm/<id>')
