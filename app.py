@@ -143,9 +143,9 @@ def render_signup_page():
 def render_admin():
     if request.method == 'POST':
         print(request.form)
-        maori = request.form.get('maori').title().strip()
-        english = request.form.get('english').title().strip()
-        category = request.form.get('category').title().strip()
+        maori = request.form.get('maori').capitalize().strip()
+        english = request.form.get('english').capitalize().strip()
+        category = request.form.get('category').capitalize().strip()
         definition = request.form.get('definition').capitalize()
         level = request.form.get('level')
         User_Id = session.get('Id')
@@ -158,7 +158,7 @@ def render_admin():
             con.commit()
         except sqlite3.IntegrityError:
             con.close()
-            return redirect("/signup?error=no")
+            return redirect("/admin?error=no")
     con = open_database(DATABASE)
     query = "SELECT * FROM Category"
     cur = con.cursor()
@@ -182,6 +182,8 @@ def render_delete_word():
         return redirect('/?message=Need+to+be+logged+in.')
     if request.method == "POST":
         word = request.form.get('word')
+        if word is None:
+            return redirect("/admin")
         word = word.split(", ")
         id1 = word[0]
         name_s = word[1]

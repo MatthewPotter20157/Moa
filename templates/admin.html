@@ -5,18 +5,18 @@
 {% block main %}
     <form class="myform" method="post">
         <div class="form-group">
-            <div class="form-label"><label for="maori">Maori:</label></div>
+            <div class="form-label"><label for="maori">Māori:</label></div>
             <div class="form-element"><input type="text" name="maori" id="maori" required></div>
         </div>
 
         <div class="form-group">
-            <div class="form-label"><label for="english">English:</label></div>
+            <div class="form-label"><label for="english">English / Ingarihi:</label></div>
             <div class="form-element"><input type="text" name="english" id="english" required></div>
         </div>
         <br>
         <br>
         <div class="form-group">
-            <div class="form-text-label">Category:</div>
+            <div class="form-text-label">Category / Rōpū Raraunga:</div>
             <div class="form-element">
                 <select name="category" id="category">
                     {% for category in categories %}
@@ -27,12 +27,12 @@
         </div>
 
         <div class="form-group">
-            <div class="form-label"><label for="definition">Definition:</label></div>
+            <div class="form-label"><label for="definition">Definition / Tautuhi:</label></div>
             <div class="form-element"><input type="text" name="definition" id="definition" required></div>
         </div>
 
         <div class="form-group">
-            <div class="form-label"><label for="level">Level:</label></div>
+            <div class="form-label"><label for="level">Level / Kōeke:</label></div>
             <div class="form-element"><input type="int" name="level" id="level" required></div>
         </div>
 
@@ -47,21 +47,20 @@
         </div>
     </form>
 
-    <h4>Delete a word</h4>
-        <form class="myform" method="post" action="/confirm_deletion">
-            <div class="form-group">
-                <div class="form-label"><label for="name">Word:</label></div>
-                <div class="form-element">
-                    <select id="cat_id" name="cat_id">
-                        {% for word in words %}
-                            <option value="{{ word[0] }}, {{ word[1] }}">{{ word[1] }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+    <form class="myform" method="post" action="/confirm_deletion">
+        <div class="form-group">
+            <div class="form-label"><label for="name">Delete a Word / Muku he Kupu:</label></div>
+            <div class="form-element">
+                <select id="cat_id" name="cat_id">
+                    {% for word in words %}
+                        <option value="{{ word[0] }}, {{ word[1] }}">{{ word[1] }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="form-group">
-                <div class="form-label"></div>
-                <div class="form-element"><input type="submit" value="Delete word"></div>
-            </div>
-        </form>
+        </div>
+        <div class="form-group">
+            <div class="form-label"></div>
+            <div class="form-element"><input type="submit" value="Delete word"></div>
+        </div>
+    </form>
 {% endblock %}
