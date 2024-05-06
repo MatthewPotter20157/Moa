@@ -48,7 +48,7 @@ def render_homepage():
 @app.route('/menu')
 def menu():
     con = create_connection(DATABASE)
-    query = "SELECT Maori, English, Category, Definition, Level, fname FROM Words w INNER JOIN Users u ON w.User_ID = u.Id " \
+    query = "SELECT Maori, English, Category, Definition, Level, fname, Images FROM Words w INNER JOIN Users u ON w.User_ID = u.Id " \
             "INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)

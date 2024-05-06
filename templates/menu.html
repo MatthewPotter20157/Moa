@@ -2,7 +2,7 @@
 
 {% block main %}
     {% for word in words %}
-        <button class="word" data-maori="{{ word[0] }}" data-english="{{ word[1] }}" data-category="{{ word[2] }}" data-definition="{{ word[3] }}" data-year="{{ word[4] }}" user="{{ word[5] }}">{{ word[0] }} <> {{ word[1] }}</button>
+        <button class="word" data-maori="{{ word[0] }}" data-english="{{ word[1] }}" data-category="{{ word[2] }}" data-definition="{{ word[3] }}" data-year="{{ word[4] }}" user="{{ word[5] }}" image="{{ word[6] }}">{{ word[0] }} <> {{ word[1] }}</button>
     {% endfor %}
 
     <!-- Thanks to Harshal for showing me a better way of displaying the data -->
@@ -21,8 +21,9 @@
                 const definition = this.getAttribute("data-definition");
                 const year = this.getAttribute("data-year");
                 const user = this.getAttribute("user");
+                const images = this.getAttribute("image")
 
-                const message = `Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}<br>User = ${user}`;
+                const message = `<img src="C:/Users/20157/OneDrive - Wellington College/13 DT/Project/static/images/images/${images}.png">Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}<br>User = ${user}`;
 
                 const dialog = document.getElementById('dialog');
                 const container = document.getElementById('message');
