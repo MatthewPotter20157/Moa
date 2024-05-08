@@ -48,14 +48,38 @@ def render_homepage():
 @app.route('/menu')
 def menu():
     con = create_connection(DATABASE)
-    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
+    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Images FROM Words w " \
             "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
     con.close()
+    con = create_connection(DATABASE)
+    query = "SELECT Id, Category FROM Category"
+    cur = con.cursor()
+    cur.execute(query)
+    category = cur.fetchall()
+    con.close()
     print(word_list)
-    return render_template('menu.html', words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
+    return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
+
+@app.route('/category/<Id>')
+def categories():
+    con = create_connection(DATABASE)
+    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Images FROM Words w " \
+            "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
+    cur = con.cursor()
+    cur.execute(query)
+    word_list = cur.fetchall()
+    con.close()
+    con = create_connection(DATABASE)
+    query = "SELECT Id, Category FROM Category"
+    cur = con.cursor()
+    cur.execute(query)
+    category = cur.fetchall()
+    con.close()
+    print(word_list)
+    return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -151,7 +175,7 @@ def render_admin():
         user_id = session.get('Id')
         image = 'noimage'
         con = open_database(DATABASE)
-        query = 'INSERT INTO Word (Maori, English, Definition, Level, Image, Cat_id, User_id ) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        query = 'INSERT INTO Words (Maori, English, Definition, Level, Image, Cat_id, User_id ) VALUES (?, ?, ?, ?, ?, ?, ?)'
         cur = con.cursor()
         try:
             cur.execute(query, (maori, english,  definition, level, image, category, user_id))
@@ -167,7 +191,7 @@ def render_admin():
     con.close()
     print(category)
     con = open_database(DATABASE)
-    query1 = "SELECT Word_id, English FROM Word"
+    query1 = "SELECT Word_id, English FROM Words"
     cur = con.cursor()
     cur.execute(query1)
     word = cur.fetchall()
