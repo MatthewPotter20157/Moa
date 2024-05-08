@@ -2,7 +2,7 @@
 
 {% block main %}
     {% for word in words %}
-        <button class="word" data-maori="{{ word[0] }}" data-english="{{ word[1] }}" data-category="{{ word[2] }}" data-definition="{{ word[3] }}" data-year="{{ word[4] }}" user="{{ word[5] }}" image="{{ word[6] }}">{{ word[0] }} <> {{ word[1] }}</button>
+        <button class="word" data-id="{{ word[0] }}" data-maori="{{ word[1] }}" data-english="{{ word[2] }}" data-category="{{ word[3] }}" data-definition="{{ word[4] }}" data-year="{{ word[5] }}" user="{{ word[6] }}" image="{{ word[7] }}">{{ word[1] }} <> {{ word[2] }}</button>
     {% endfor %}
 
     <!-- Thanks to Harshal for showing me a better way of displaying the data -->
@@ -15,6 +15,7 @@
     <script>
         document.querySelectorAll('.word').forEach(button => {
             button.addEventListener('click', function() {
+                const id = this.getAttribute("data-id");
                 const maori = this.getAttribute("data-maori");
                 const english = this.getAttribute("data-english");
                 const category = this.getAttribute("data-category");
@@ -29,6 +30,9 @@
                 const container = document.getElementById('message');
                 container.innerHTML = message;
                 dialog.showModal();
+
+                const deleteButton = document.getElementById('delete');
+                deleteButton.setAttribute('data-id', id);
             });
         });
 
@@ -41,6 +45,22 @@
 
         const deleteButton = document.getElementById('delete');
         deleteButton.addEventListener('click', function() {
+            const id = this.getAttribute("data-id");
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'confirm_deletion';
+            // Create an input field for the word to be deleted
+            const idInput = document.createElement('input');
+            idInput.type = 'hidden';
+            idInput.name = 'word_id';
+            idInput.value = id;
+
+            // Append the input field to the form
+            form.appendChild(idInput);
+
+            document.body.appendChild(form);
+
+            form.submit();
         });
     </script>
 {% endblock %}

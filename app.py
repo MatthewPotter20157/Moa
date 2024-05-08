@@ -48,8 +48,8 @@ def render_homepage():
 @app.route('/menu')
 def menu():
     con = create_connection(DATABASE)
-    query = "SELECT Maori, English, Category, Definition, Level, fname, Images FROM Words w INNER JOIN Users u ON w.User_ID = u.Id " \
-            "INNER JOIN Category c ON w.Cat_id = c.Id"
+    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
+            "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
@@ -148,13 +148,13 @@ def render_admin():
         category = request.form.get('category').capitalize().strip()
         definition = request.form.get('definition').capitalize()
         level = request.form.get('level')
-        User_Id = session.get('Id')
+        user_id = session.get('Id')
         image = 'noimage'
         con = open_database(DATABASE)
-        query = 'INSERT INTO Words (Maori, English, Cat_id, Definition, Level, User_Id, Images) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        query = 'INSERT INTO Word (Maori, English, Definition, Level, Image, Cat_id, User_id ) VALUES (?, ?, ?, ?, ?, ?, ?)'
         cur = con.cursor()
         try:
-            cur.execute(query, (maori, english, category, definition, level, User_Id, image))
+            cur.execute(query, (maori, english,  definition, level, image, category, user_id))
             con.commit()
         except sqlite3.IntegrityError:
             con.close()
@@ -167,7 +167,7 @@ def render_admin():
     con.close()
     print(category)
     con = open_database(DATABASE)
-    query1 = "SELECT Id, English FROM Words"
+    query1 = "SELECT Word_id, English FROM Word"
     cur = con.cursor()
     cur.execute(query1)
     word = cur.fetchall()
@@ -180,14 +180,17 @@ def render_admin():
 def render_delete_word():
     if not is_logged_in():
         return redirect('/?message=Need+to+be+logged+in.')
-    if request.method == "POST":
+    if request.method == 'POST':
+        print('Working')
         word = request.form.get('word')
         if word is None:
-            return redirect("/admin")
-        word = word.split(", ")
+            return redirect('/admin')
+        word = word.split(', ')
         id1 = word[0]
         name_s = word[1]
-        return render_template("delete_confirm1.html", id=id1, name=name_s, type="word", logged_in=is_logged_in(), teacher=is_teacher())
+        return render_template("confirm_deletion.html", id=id1, name=name_s, type="word", logged_in=is_logged_in(),
+                               teacher=is_teacher())
+
     return redirect('/admin')
 
 @app.route('/delete_word_confirm/<id>')
@@ -195,7 +198,7 @@ def delete_word_confirm(id):
     if not is_logged_in():
         return redirect('/?message=Need+tobe+logged+in.')
     con = create_connection(DATABASE)
-    query = 'DELETE FROM maori_words WHERE id = ?'
+    query = 'DELETE FROM Words WHERE id = ?'
     cur = con.cursor()
     cur.execute(query, (id,))
     con.commit()
