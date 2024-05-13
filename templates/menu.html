@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <div class="dropdown">
-        <button class="dropbtn">Categories</button>
-        <div class="dropdown-content">
-            {% for category in categories %}
-            <a href="/category/{{ category[0] }}">{{ category[1] }}</a>
-            {% endfor %}
-        </div>
-    </div>
     {% for word in words %}
-        <button class="word" data-id="{{ word[0] }}" data-maori="{{ word[1] }}" data-english="{{ word[2] }}" data-category="{{ word[3] }}" data-definition="{{ word[4] }}" data-year="{{ word[5] }}" user="{{ word[6] }}" image="{{ word[7] }}">{{ word[1] }} <> {{ word[2] }}</button>
+
+        {% if teacher and logged_in %}
+            <button class="delete_btn" word_Id="{{ word[0] }}">Delete</button>
+            <form id="delete_{{ word[0] }}" action="/menu" method="post" style="display: none;">
+            <input type="hidden" name="word_id" value="{{ word[0] }}">
+            </form>
+        {% else %}
+        {% endif %}
+        <button class="word" data-maori="{{ word[1] }}" data-english="{{ word[2] }}" data-category="{{ word[3] }}" data-definition="{{ word[4] }}" data-year="{{ word[5] }}" data-user="{{ word[6] }}" data-image="{{ word[7] }}" data-date="{{ word[8] }}">{{ word[1] }} <> {{ word[2] }}</button>
     {% endfor %}
 
     <!-- Thanks to Harshal for showing me a better way of displaying the data -->
     <dialog id="dialog">
         <div id="message"></div>
         <button id="close_btn">Close</button>
-        <button id="edit">Edit</button>
     </dialog>
 
     <script>
@@ -28,10 +27,11 @@
                 const category = this.getAttribute("data-category");
                 const definition = this.getAttribute("data-definition");
                 const year = this.getAttribute("data-year");
-                const user = this.getAttribute("user");
-                const images = this.getAttribute("image")
+                const user = this.getAttribute("data-user");
+                const images = this.getAttribute("data-image")
+                const date = this.getAttribute("data-date")
 
-                const message = `<img src="static/images/${images}.png" class=images><br>Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}<br>User = ${user}`;
+                const message = `<img src="static/images/${images}.png" class=images><br>Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year Level = ${year}<br>Entered By User = ${user}<br>Date Entered = ${date}`;
 
                 const dialog = document.getElementById('dialog');
                 const container = document.getElementById('message');
@@ -46,10 +46,14 @@
             dialog.close();
         });
 
-
-        const editButton = document.getElementById('edit');
-        editButton.addEventListener('click', function() {
-
+        document.querySelectorAll('.delete_btn').forEach(delete_button => {
+            delete_button.addEventListener('click', function () {
+                const word_id = this.getAttribute("word_id")
+                if (confirm('You Delete Yes?')){
+                    const form = document.getElementById('delete_' + word_id);
+                    form.submit();
+                }
+            });
         });
     </script>
 {% endblock %}

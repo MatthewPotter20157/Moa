@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 import sqlite3
 from sqlite3 import Error
 from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -45,17 +46,26 @@ def render_homepage():
     return render_template('home.html', logged_in=is_logged_in(), teacher=is_teacher())
 
 
-@app.route('/menu')
-def menu():
+@app.route('/dictionary', methods=['GET', 'POST'])
+def dictionary():
+    if request.method == 'POST':
+        word_Id = request.method.get('word_Id')
+
+        query = 'DELETE FROM Word WHERE word_Id = ?'
+        con = create_connection(DATABASE)
+        cur = con.cursor()
+        cur.execute(query, (word_Id,))
+        con.close()
+        return redirect('/dictionary')
     con = create_connection(DATABASE)
-    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Images FROM Words w " \
+    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
             "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
     con.close()
     con = create_connection(DATABASE)
-    query = "SELECT Id, Category FROM Category"
+    query = "SELECT * FROM Category"
     cur = con.cursor()
     cur.execute(query)
     category = cur.fetchall()
@@ -63,17 +73,18 @@ def menu():
     print(word_list)
     return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
-@app.route('/category/<Id>')
+
+@app.route('/category/<Cat_id>')
 def categories():
     con = create_connection(DATABASE)
-    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Images FROM Words w " \
+    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
             "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)
     word_list = cur.fetchall()
     con.close()
     con = create_connection(DATABASE)
-    query = "SELECT Id, Category FROM Category"
+    query = "SELECT * FROM Category"
     cur = con.cursor()
     cur.execute(query)
     category = cur.fetchall()
@@ -169,16 +180,17 @@ def render_admin():
         print(request.form)
         maori = request.form.get('maori').capitalize().strip()
         english = request.form.get('english').capitalize().strip()
-        category = request.form.get('category').capitalize().strip()
+        category = request.form.get('category')
         definition = request.form.get('definition').capitalize()
         level = request.form.get('level')
         user_id = session.get('Id')
         image = 'noimage'
+        date_entry = datetime.today().strftime("%Y-%m-%d")
         con = open_database(DATABASE)
-        query = 'INSERT INTO Words (Maori, English, Definition, Level, Image, Cat_id, User_id ) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        query = 'INSERT INTO Word (Maori, English, Definition, Level, Image, Cat_id, User_id, date_entry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
         cur = con.cursor()
         try:
-            cur.execute(query, (maori, english,  definition, level, image, category, user_id))
+            cur.execute(query, (maori, english,  definition, level, image, category, user_id, date_entry))
             con.commit()
         except sqlite3.IntegrityError:
             con.close()
@@ -190,14 +202,8 @@ def render_admin():
     category = cur.fetchall()
     con.close()
     print(category)
-    con = open_database(DATABASE)
-    query1 = "SELECT Word_id, English FROM Words"
-    cur = con.cursor()
-    cur.execute(query1)
-    word = cur.fetchall()
-    print(word)
-    con.close()
-    return render_template('admin.html', words=word, categories=category, logged_in=is_logged_in(), teacher=is_teacher())
+    return render_template('admin.html', categories=category,
+                           logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/confirm_deletion', methods=['POST'])
@@ -217,6 +223,7 @@ def render_delete_word():
 
     return redirect('/admin')
 
+
 @app.route('/delete_word_confirm/<id>')
 def delete_word_confirm(id):
     if not is_logged_in():
@@ -228,6 +235,29 @@ def delete_word_confirm(id):
     con.commit()
     con.close()
     return redirect('/admin')
+
+
+@app.route('/edit_word', methods=['POST', 'GET'])
+def edit_word():
+    if request.method == 'POST':
+        print(request.form)
+        maori = request.form.get('maori').capitalize().strip()
+        english = request.form.get('english').capitalize().strip()
+        category = request.form.get('category').capitalize().strip()
+        definition = request.form.get('definition').capitalize()
+        level = request.form.get('level')
+        user_id = session.get('Id')
+        image = 'noimage'
+        con = open_database(DATABASE)
+        query = 'INSERT INTO Words (Maori, English, Definition, Level, Image, Cat_id, User_id ) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        cur = con.cursor()
+        try:
+            cur.execute(query, (maori, english,  definition, level, image, category, user_id))
+            con.commit()
+        except sqlite3.IntegrityError:
+            con.close()
+            return redirect("/admin?error=no")
+        return render_template("edit_word.html", categories=category, logged_in=is_logged_in(), teacher=is_teacher())
 
 
 if __name__ == '__main__':
