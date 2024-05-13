@@ -5,7 +5,7 @@
 
         {% if teacher and logged_in %}
             <button class="delete_btn" word_Id="{{ word[0] }}">Delete</button>
-            <form id="delete_{{ word[0] }}" action="/menu" method="post" style="display: none;">
+            <form id="delete_{{ word[0] }}" action="/dictionary" method="post" style="display: none;">
             <input type="hidden" name="word_id" value="{{ word[0] }}">
             </form>
         {% else %}

@@ -56,7 +56,7 @@ def dictionary():
         cur = con.cursor()
         cur.execute(query, (word_Id,))
         con.close()
-        return redirect('/dictionary')
+        return redirect('/dictionary?error=Deleted')
     con = create_connection(DATABASE)
     query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
             "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
