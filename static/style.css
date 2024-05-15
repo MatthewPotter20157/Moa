@@ -188,3 +188,16 @@ a:hover {
 table {
     border-collapse: collapse;
 }
+
+.buttons {
+    border: 1px solid;
+    padding: 0px;
+    border-radius: 15px;
+    max-width: 30%;
+    border-color: aliceblue;
+    height: 60px;
+}
+
+.delete_btn {
+    max-width: 10px;
+}

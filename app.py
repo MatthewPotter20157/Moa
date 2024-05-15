@@ -49,16 +49,17 @@ def render_homepage():
 @app.route('/dictionary', methods=['GET', 'POST'])
 def dictionary():
     if request.method == 'POST':
-        word_Id = request.method.get('word_Id')
-
-        query = 'DELETE FROM Word WHERE word_Id = ?'
+        word_Id = request.form.get('Word_id')
+        print(word_Id)
+        query = 'DELETE FROM Word WHERE Word_id = ?'
         con = create_connection(DATABASE)
         cur = con.cursor()
         cur.execute(query, (word_Id,))
+        con.commit()
         con.close()
         return redirect('/dictionary?error=Deleted')
     con = create_connection(DATABASE)
-    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
+    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
             "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
     cur = con.cursor()
     cur.execute(query)
@@ -185,7 +186,7 @@ def render_admin():
         level = request.form.get('level')
         user_id = session.get('Id')
         image = 'noimage'
-        date_entry = datetime.today().strftime("%Y-%m-%d")
+        date_entry = datetime.today().strftime("%d-%m-%Y")
         con = open_database(DATABASE)
         query = 'INSERT INTO Word (Maori, English, Definition, Level, Image, Cat_id, User_id, date_entry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
         cur = con.cursor()
