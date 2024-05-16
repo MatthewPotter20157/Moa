@@ -2,7 +2,6 @@
 
 {% block main %}
     {% for word in words %}
-        <div class="buttons">
         {% if teacher and logged_in %}
             <button class="delete_btn" word_Id="{{ word[0] }}">Delete</button>
             <form id="delete_{{ word[0] }}" action="/dictionary" method="post" style="display: none;">
@@ -11,7 +10,6 @@
         {% else %}
         {% endif %}
         <button class="word" data-maori="{{ word[1] }}" data-english="{{ word[2] }}" data-category="{{ word[3] }}" data-definition="{{ word[4] }}" data-year="{{ word[5] }}" data-user="{{ word[6] }}" data-image="{{ word[7] }}" data-date="{{ word[8] }}">{{ word[1] }} <> {{ word[2] }}</button>
-        </div>
     {% endfor %}
 
     <!-- Thanks to Harshal for showing me a better way of displaying the data -->
