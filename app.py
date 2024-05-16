@@ -75,25 +75,6 @@ def dictionary():
     return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
 
-@app.route('/category/<Cat_id>')
-def categories():
-    con = create_connection(DATABASE)
-    query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image FROM Word w " \
-            "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
-    cur = con.cursor()
-    cur.execute(query)
-    word_list = cur.fetchall()
-    con.close()
-    con = create_connection(DATABASE)
-    query = "SELECT * FROM Category"
-    cur = con.cursor()
-    cur.execute(query)
-    category = cur.fetchall()
-    con.close()
-    print(word_list)
-    return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
-
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if is_logged_in():
@@ -205,37 +186,6 @@ def render_admin():
     print(category)
     return render_template('admin.html', categories=category,
                            logged_in=is_logged_in(), teacher=is_teacher())
-
-
-@app.route('/confirm_deletion', methods=['POST'])
-def render_delete_word():
-    if not is_logged_in():
-        return redirect('/?message=Need+to+be+logged+in.')
-    if request.method == 'POST':
-        print('Working')
-        word = request.form.get('word')
-        if word is None:
-            return redirect('/admin')
-        word = word.split(', ')
-        id1 = word[0]
-        name_s = word[1]
-        return render_template("confirm_deletion.html", id=id1, name=name_s, type="word", logged_in=is_logged_in(),
-                               teacher=is_teacher())
-
-    return redirect('/admin')
-
-
-@app.route('/delete_word_confirm/<id>')
-def delete_word_confirm(id):
-    if not is_logged_in():
-        return redirect('/?message=Need+tobe+logged+in.')
-    con = create_connection(DATABASE)
-    query = 'DELETE FROM Words WHERE id = ?'
-    cur = con.cursor()
-    cur.execute(query, (id,))
-    con.commit()
-    con.close()
-    return redirect('/admin')
 
 
 @app.route('/edit_word', methods=['POST', 'GET'])
