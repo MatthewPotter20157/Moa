@@ -75,6 +75,29 @@ def dictionary():
     return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
 
+@app.route('/category', methods=['GET', 'POST'])
+def categories():
+    con = create_connection(DATABASE)
+    query = "SELECT * FROM Category"
+    cur = con.cursor()
+    cur.execute(query)
+    category = cur.fetchall()
+    con.close()
+    if request.method == 'POST':
+        category_1 = request.form.get('category')
+
+
+        con = create_connection(DATABASE)
+        query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
+                "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
+        cur = con.cursor()
+        cur.execute(query, (category_1,))
+        cat_list = cur.fetchall()
+        con.close()
+        return render_template('category.html', categories=category, words=cat_list, logged_in=is_logged_in(), teacher=is_teacher())
+    return render_template('category.html', categories=category, words=[], logged_in=is_logged_in(), teacher=is_teacher())
+
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if is_logged_in():

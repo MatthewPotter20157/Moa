@@ -1,55 +1,44 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <div class="dropdown">
-        <button class="dropbtn">Categories</button>
-        <div class="dropdown-content">
+<!-- Outline takin from the goat Harshal -->
+<div class="">
+    <header>
+        <h1>Sort By Category</h1>
+    </header>
+    <div class="">
+        <br>
+        <form class="" method="POST" action="/category">
             {% for category in categories %}
-            <a href="/category/{{ category[0] }}">{{ category[1] }}</a>
+            <input type="hidden" name="category" value="{{ category[0] }}">
             {% endfor %}
-        </div>
+            <input type="Submit" value="Actions" class="table">
+        </form>
     </div>
-    {% for word in words %}
-        <button class="word" data-id="{{ word[0] }}" data-maori="{{ word[1] }}" data-english="{{ word[2] }}" data-category="{{ word[3] }}" data-definition="{{ word[4] }}" data-year="{{ word[5] }}" user="{{ word[6] }}" image="{{ word[7] }}">{{ word[1] }} <> {{ word[2] }}</button>
-    {% endfor %}
 
-    <!-- Thanks to Harshal for showing me a better way of displaying the data -->
-    <dialog id="dialog">
-        <div id="message"></div>
-        <button id="close_btn">Close</button>
-        <button id="edit">Edit</button>
-    </dialog>
+    <br>
+    <!-- Create a table to display the word information -->
+    <div class="">
+        <table>
+            <tr>
+                <th>Word</th>
+                <th>English</th>
+                <th>Definition</th>
+                <th>Category</th>
+                <th>Level</th>
+            </tr>
 
-    <script>
-        document.querySelectorAll('.word').forEach(button => {
-            button.addEventListener('click', function() {
-                const maori = this.getAttribute("data-maori");
-                const english = this.getAttribute("data-english");
-                const category = this.getAttribute("data-category");
-                const definition = this.getAttribute("data-definition");
-                const year = this.getAttribute("data-year");
-                const user = this.getAttribute("user");
-                const images = this.getAttribute("image")
-
-                const message = `<img src="static/images/${images}.png" class=images><br>Maori = ${maori}<br>English = ${english}<br>Category = ${category}<br>Definition = ${definition}<br>Year = ${year}<br>User = ${user}`;
-
-                const dialog = document.getElementById('dialog');
-                const container = document.getElementById('message');
-                container.innerHTML = message;
-                dialog.showModal();
-            });
-        });
-
-        const closeButton = document.getElementById('close_btn');
-        closeButton.addEventListener('click', function() {
-            const dialog = document.getElementById('dialog');
-            dialog.close();
-        });
-
-
-        const editButton = document.getElementById('edit');
-        editButton.addEventListener('click', function() {
-
-        });
-    </script>
+            <!-- Iterate over the words and display each word's information in a table row -->
+            {% for word in words %}
+            <tr>
+                <td>{{ word[1] }}</td>
+                <td>{{ word[2] }}</td>
+                <td>{{ word[3] }}</td>
+                <td>{{ word[4] }}</td>
+                <td>{{ word[5] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
 {% endblock %}
