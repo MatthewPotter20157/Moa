@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% block pageheading %}Delete{% endblock %}
-
-{% block main %}
-    <h3>Are you sure you want to delete {{ word[1] }}/{{ word[2] }}
-        <a href="/delete_{{ word[1] }}_confirm_{{ word[0] }}">Yes</a>/<a href="/admin">No</a></h3>
-{% endblock %}

@@ -2,23 +2,26 @@
 
 {% block main %}
 <!-- Outline takin from the goat Harshal -->
-<div class="">
+<div>
     <header>
         <h1>Sort By Category</h1>
     </header>
-    <div class="">
-        <br>
-        <form class="" method="POST" action="/category">
+    <!-- creates a list of buttons the users can click on to sort the words-->
+    <div class="form-group">
+        <div class="form-text-label">Category / Rōpū Raraunga:</div>
+        <div class="form-element">
+            <!-- the code here is taken from an old project -->
             {% for category in categories %}
-            <input type="hidden" name="category" value="{{ category[0] }}">
+            <form name="category" id="category" action="/category">
+                    <input type="hidden" name="sort_category" value="{{ category[0] }}" id="sort">
+                    <input type="Submit" value="{{ category[1] }}" id="sort">
+            </form>
             {% endfor %}
-            <input type="Submit" value="Actions" class="table">
-        </form>
+        </div>
     </div>
 
     <br>
-    <!-- Create a table to display the word information -->
-    <div class="">
+    <div class="container">
         <table>
             <tr>
                 <th>Word</th>
@@ -28,14 +31,13 @@
                 <th>Level</th>
             </tr>
 
-            <!-- Iterate over the words and display each word's information in a table row -->
             {% for word in words %}
             <tr>
+                <td>{{ word[0] }}</td>
                 <td>{{ word[1] }}</td>
                 <td>{{ word[2] }}</td>
                 <td>{{ word[3] }}</td>
                 <td>{{ word[4] }}</td>
-                <td>{{ word[5] }}</td>
             </tr>
             {% endfor %}
         </table>

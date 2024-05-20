@@ -85,17 +85,18 @@ def categories():
     con.close()
     if request.method == 'POST':
         category_1 = request.form.get('category')
-
-
         con = create_connection(DATABASE)
-        query = "SELECT Word_Id, Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
-                "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id"
+        query = "SELECT Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
+                "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id WHERE w.Category = ?"
         cur = con.cursor()
         cur.execute(query, (category_1,))
-        cat_list = cur.fetchall()
+        words_list = cur.fetchall()
+        print(words_list)
         con.close()
-        return render_template('category.html', categories=category, words=cat_list, logged_in=is_logged_in(), teacher=is_teacher())
-    return render_template('category.html', categories=category, words=[], logged_in=is_logged_in(), teacher=is_teacher())
+        return render_template('category.html', categories=category, words=words_list,
+                               logged_in=is_logged_in(), teacher=is_teacher())
+    return render_template('category.html', categories=category, words=[],
+                           logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/login', methods=['POST', 'GET'])
