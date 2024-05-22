@@ -71,7 +71,6 @@ def dictionary():
     cur.execute(query)
     category = cur.fetchall()
     con.close()
-    print(word_list)
     return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
 
@@ -85,14 +84,12 @@ def categories():
         category = cur.fetchall()
         con.close()
         category_1 = request.form.get('category')
-        print("Selected category:", category_1)  # Add this line for debugging
         con = create_connection(DATABASE)
         query = "SELECT Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
                 "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id WHERE w.Cat_id = ?"
         cur = con.cursor()
         cur.execute(query, (category_1,))
         words_list = cur.fetchall()
-        print("Words list:", words_list)  # Add this line for debugging
         con.close()
         return render_template('category.html', categories=category, words=words_list,
                                logged_in=is_logged_in(), teacher=is_teacher())
@@ -112,18 +109,15 @@ def categories():
 def login():
     if is_logged_in():
         return redirect("/")
-    print("Logging in")
     if request.method == 'POST':
         email_user = request.form['email'].strip().lower()
         password = request.form['password'].strip()
-        print(email_user)
         query = "SElECT Id, fname, password,teacher FROM Users WHERE email = ?"
         con = open_database(DATABASE)
         cur = con.cursor()
         cur.execute(query, (email_user, ))
         user_data = cur.fetchall()
         con.close()
-        print(user_data)
 
         if user_data is None:
             return redirect("/login?error=Email+invalid+password+incorrect")

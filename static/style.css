@@ -13,9 +13,9 @@ body {
 
 .container {
     width: 60vw;
-    /*background-color: rgba(52, 73, 94, 1.0);*/
-    /*color: rgba(236, 240, 241, 1.0);*/
-    margin-left: 25%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
 .container::after {
@@ -186,15 +186,52 @@ a:hover {
 }
 
 table {
-    border-spacing: 0;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
 td {
-    border: 1px dot-dash whitesmoke;
-    padding: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
 }
 
 th {
-    border: 1px dot-dash whitesmoke;
-    padding: 15px;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Optional: Category-specific styling */
+td.category {
+    font-weight: bold;
+}
+
+td.level {
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    th, td {
+        padding: 5px;
+    }
 }
