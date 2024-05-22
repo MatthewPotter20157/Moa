@@ -12,8 +12,8 @@
         <div class="form-element">
             <!-- the code here is taken from an old project -->
             {% for category in categories %}
-            <form name="category" id="category" action="/category">
-                    <input type="hidden" name="sort_category" value="{{ category[0] }}" id="sort">
+            <form name="category" id="category" action="/category" method="post">
+                    <input type="hidden" name="category" value="{{ category[0] }}" id="sort">
                     <input type="Submit" value="{{ category[1] }}" id="sort">
             </form>
             {% endfor %}

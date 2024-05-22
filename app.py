@@ -77,24 +77,33 @@ def dictionary():
 
 @app.route('/category', methods=['GET', 'POST'])
 def categories():
+    if request.method == 'POST':
+        con = create_connection(DATABASE)
+        query = "SELECT * FROM Category"
+        cur = con.cursor()
+        cur.execute(query)
+        category = cur.fetchall()
+        con.close()
+        category_1 = request.form.get('category')
+        print("Selected category:", category_1)  # Add this line for debugging
+        con = create_connection(DATABASE)
+        query = "SELECT Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
+                "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id WHERE w.Cat_id = ?"
+        cur = con.cursor()
+        cur.execute(query, (category_1,))
+        words_list = cur.fetchall()
+        print("Words list:", words_list)  # Add this line for debugging
+        con.close()
+        return render_template('category.html', categories=category, words=words_list,
+                               logged_in=is_logged_in(), teacher=is_teacher())
     con = create_connection(DATABASE)
     query = "SELECT * FROM Category"
     cur = con.cursor()
     cur.execute(query)
     category = cur.fetchall()
     con.close()
-    if request.method == 'POST':
-        category_1 = request.form.get('category')
-        con = create_connection(DATABASE)
-        query = "SELECT Maori, English, Category, Definition, Level, fname, Image, Date_Entry FROM Word w " \
-                "INNER JOIN Users u ON w.User_ID = u.Id INNER JOIN Category c ON w.Cat_id = c.Id WHERE w.Category = ?"
-        cur = con.cursor()
-        cur.execute(query, (category_1,))
-        words_list = cur.fetchall()
-        print(words_list)
-        con.close()
-        return render_template('category.html', categories=category, words=words_list,
-                               logged_in=is_logged_in(), teacher=is_teacher())
+
+    # Handle the initial GET request here
     return render_template('category.html', categories=category, words=[],
                            logged_in=is_logged_in(), teacher=is_teacher())
 
@@ -191,6 +200,17 @@ def render_admin():
         level = request.form.get('level')
         user_id = session.get('Id')
         image = 'noimage'
+        try:
+            level_int = int(float(level))
+            print(type(level_int))
+        except:
+            return redirect("/admin?error=Level needs to be an integer")
+
+        if level_int < 1:
+            return redirect("/admin?error=Level too low")
+
+        if level_int > 10:
+            return redirect("/admin?error=Level too high")
         date_entry = datetime.today().strftime("%d-%m-%Y")
         con = open_database(DATABASE)
         query = 'INSERT INTO Word (Maori, English, Definition, Level, Image, Cat_id, User_id, date_entry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
