@@ -71,7 +71,7 @@ def dictionary():
     cur.execute(query)
     category = cur.fetchall()
     con.close()
-    return render_template('menu.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
+    return render_template('dictionary.html', categories=category, words=word_list, logged_in=is_logged_in(), teacher=is_teacher())
 
 
 @app.route('/category', methods=['GET', 'POST'])
